@@ -1,0 +1,49 @@
+_______ is the code with natural language mixed with Java code	
+A. Machine Language
+B. Psuedocode
+C. High-level programming language
+D. JavaScript
+B
+5
+____ is the Java assignment operator 
+A. =
+B. %
+C. ==
+D. <<
+A
+5
+Suppose x is 1. What is x after x += 2?
+A. 2
+B. 3
+C. 1
+D. Error
+B
+10
+Which of these is returned by greater than, less than and equal to operators?
+A)Intergers
+B)Floating Point Numbers
+C)Boolean
+D)None of the above
+C
+10
+What is the output of relational operators?
+A)Integer
+B)Boolean
+C)Characters
+D)Double
+B
+25
+Which data type value is returned by a ll transcendental math functions?
+A)Int
+B)Float
+C)Double
+D)Long 
+C
+25
+What is the range of byte data type in Java?
+A)-128 to 127 
+B)-32768 to 32767 
+C)-2147483648 to 2147483647 
+D)None of the above
+A
+35
