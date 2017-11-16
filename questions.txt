@@ -20,7 +20,7 @@ D. Error
 B
 10
 Which of these is returned by greater than, less than and equal to operators?
-A)Intergers
+A)Integers
 B)Floating Point Numbers
 C)Boolean
 D)None of the above
