@@ -1,3 +1,9 @@
+/*Team 6
+ * November 16, 2017
+ * Purpose: This version adds methods.
+ * 
+ */
+
 package javaGamev3;
 import javax.swing.JOptionPane;
 import java.util.Scanner;
@@ -7,10 +13,7 @@ public class javaGamev3 {
 	public static void main(String[] args)throws IOException{ //include any time the method uses file reading and writing 
 		//Declare and initialize variables
 		String name = " ", mainMenu = " ";
-		int accumulator = 0, mainMenuInt = 0,  highscore = 0, counter = 0; 
-			
-		
-		
+		int accumulator = 0, mainMenuInt = 0,  userHighscore = 0, highscore1 = 0, counter = 0; 
 			
 		//Prompt user for name
 		name = JOptionPane.showInputDialog("Enter your name: ");
@@ -91,36 +94,71 @@ public class javaGamev3 {
 				 JOptionPane.showMessageDialog(null, "Congratulations you have earned: " + accumulator + " points");
 				 fileInput.close();
 				 accumulator = 0; 
-				 highscore = accumulator;
-				 FileWriter appendfile = new FileWriter("highscores.txt", true); //if the file already exists, this will append the 
-					//data in the file.  If it does not yet exist, the file will be created.
-					//write to highscore.txt
+				 userHighscore = accumulator;
+			      
+				 highscore1 = readInHighScore(); 
+				 JOptionPane.showMessageDialog(null, highscore1);
+				 compareScore(highscore1, userHighscore); 
+					 
 				 
-				 PrintWriter outfile = new PrintWriter(appendfile); //if the file already exists, this will overwrite the 
-					//data in the file.  If it does not yet exist, the file will be created.
-				 
-					if (highscore > 0)
-					outfile.println( name + "\t" + highscore);
-					outfile.close();
-					
+
 			}	
 				
-				else if (mainMenuInt == 3)
-					
+				else if (mainMenuInt == 3)		
 			    JOptionPane.showMessageDialog(null, "Thanks for playing, Goodbye!");//exit and display farewell message
 					
-		
 				else 
 				{
 					JOptionPane.showMessageDialog(null, "Error: Select from 1-3.");
 				}
-					
-					
 		}
 			while (mainMenuInt != 3);
 
 	}
 
 }
+public static int readInHighScore() throws IOException
 
+	{
+		//declare a File object
+			  File filein = new File("highscore.txt"); //attempt to open "highscores.txt"
+
+			  //Declare a scanner object
+			  Scanner fileInput = new Scanner(filein);		
+
+			  //declare variables
+		      int highscore = 0;
+
+		      while(fileInput.hasNext()) //while there is data in the file
+		      {  
+		      //read in a line
+		      highscore = fileInput.nextInt();
+		      }
+		      
+		      //close file
+		      fileInput.close();
+		      
+			return highscore;
+	}
+	
+	
+	public static void compareScore(int highscore, int userHighscore) throws IOException
+
+	{
+		//declare file object
+		FileWriter appendfile = new FileWriter("highscore.txt", true);
+
+		PrintWriter outfile = new PrintWriter(appendfile); //if the file already exists, this will overwrite the 
+		//data in the file.  If it does not yet exist, the file will be created.
+		
+		//Compare the user's score
+		if (userHighscore > highscore) 
+
+		{
+			//write to file "employees.txt"
+			outfile.println(userHighscore);
+		}
+	}
 }
+
+
