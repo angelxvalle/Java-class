@@ -7,20 +7,16 @@ public class javaGamev3 {
 	public static void main(String[] args)throws IOException{ //include any time the method uses file reading and writing 
 		//Declare and initialize variables
 		String name = " ", mainMenu = " ";
-		int accumulator = 0, mainMenuInt = 0,  highscore = 0;
+		int accumulator = 0, mainMenuInt = 0,  highscore = 0, counter = 0; 
 			
-		//declare a File object
-		File filein = new File("javav4.txt"); //attempt to open "names.txt"
 		
-		//Declare a scanner object
-		Scanner fileInput = new Scanner(filein);
+		
 			
 		//Prompt user for name
 		name = JOptionPane.showInputDialog("Enter your name: ");
 				
 		//Display intro
-		JOptionPane.showMessageDialog(null, "Welcome to the Impossible Quiz " + name + "!" );
-		JOptionPane.showMessageDialog(null, "Good luck!!!");
+		JOptionPane.showMessageDialog(null, "Welcome to the Impossible Quiz " + name + "!\n\t\tGood luck!" );
 
 				
 		//Main Loop
@@ -33,7 +29,7 @@ public class javaGamev3 {
 			mainMenuInt = Integer.parseInt(mainMenu);
 
 			
-			//read file 
+		
 			
 			if (mainMenuInt == 1)
 				//display rules
@@ -45,11 +41,15 @@ public class javaGamev3 {
 				String question = " ", answer1 = " ", answer2 = " ", answer3 = " ", answer4 = " ", answer = " ", correctAnswer = " ", points = " ";    
 				int pointsInt = 0, answerInt = 0;
 				
-				do 
-				{
+					//read file 
+				//declare a File object
+				File filein = new File("questions.txt"); //attempt to open "names.txt"
+				//Declare a scanner object
+				Scanner fileInput = new Scanner(filein);
+				
 				while(fileInput.hasNext()) //while there is data in the file
 				{
-				
+					
 					//variables to each line
 					question = fileInput.nextLine();
 					answer1 = fileInput.nextLine(); 
@@ -60,6 +60,9 @@ public class javaGamev3 {
 					points = fileInput.nextLine(); 
 					pointsInt = Integer.parseInt(points);
 					
+					do
+					{
+					counter = 0; 
 					//display questions
 					answer = JOptionPane.showInputDialog(question + "\n" + 
 														answer1 + "\n" + 
@@ -69,17 +72,37 @@ public class javaGamev3 {
 														"Score: " + accumulator + 
 														"\nPlease select the correct answer");
 					
-					answerInt = Integer.parseInt(answer);
 					if (answer.equalsIgnoreCase(correctAnswer)) 
+					{
+						JOptionPane.showMessageDialog(null, "Correct Answer!\nPoints earned: " + pointsInt); 
 						accumulator += pointsInt; 
+					}
 					
-					else if (answer.equalsIgnoreCase("a" + "b" + "c" + "d"))
-					JOptionPane.showMessageDialog(null, "Incorrect Answer!");
-					
-					else 
-						JOptionPane.showMessageDialog(null, "Invalid Answer");
+					else if (answer.equalsIgnoreCase("a") || answer.equalsIgnoreCase("b") || answer.equalsIgnoreCase("c") || answer.equalsIgnoreCase("d"))
+						JOptionPane.showMessageDialog(null, "Wrong Answer\nPoints earned: 0");
+						
+					else
+					{
+						JOptionPane.showMessageDialog(null, "Invalid answer");
+						counter = 1; 
+					}
+					} while (counter == 1); 
 				}
-				}while (!(answer.equalsIgnoreCase("a" + "b" + "c" + "d"))); 
+				 JOptionPane.showMessageDialog(null, "Congratulations you have earned: " + accumulator + " points");
+				 fileInput.close();
+				 accumulator = 0; 
+				 highscore = accumulator;
+				 FileWriter appendfile = new FileWriter("highscores.txt", true); //if the file already exists, this will append the 
+					//data in the file.  If it does not yet exist, the file will be created.
+					//write to highscore.txt
+				 
+				 PrintWriter outfile = new PrintWriter(appendfile); //if the file already exists, this will overwrite the 
+					//data in the file.  If it does not yet exist, the file will be created.
+				 
+					if (highscore > 0)
+					outfile.println( name + "\t" + highscore);
+					outfile.close();
+					
 			}	
 				
 				else if (mainMenuInt == 3)
@@ -91,15 +114,7 @@ public class javaGamev3 {
 				{
 					JOptionPane.showMessageDialog(null, "Error: Select from 1-3.");
 				}
-					highscore = accumulator;
-					//declare highscore.txt
-					PrintWriter writer1 = new PrintWriter("highscore.txt");
-					File filein1 = new File("highscore.txt");
 					
-					//write to highscore.txt
-					
-					writer1.println("Your highscore: 0" + highscore);
-					writer1.close();
 					
 		}
 			while (mainMenuInt != 3);
