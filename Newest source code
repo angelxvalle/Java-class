@@ -1,0 +1,212 @@
+/*Team 6
+ * November 16, 2017
+ * Purpose: This program is a question based game.
+ * This version adds methods.
+ */
+
+package javaGame;
+import javax.swing.JOptionPane;
+import java.util.Scanner;
+import java.io.*;
+public class javaGame {
+
+	public static void main(String[] args)throws IOException{ //include any time the method uses file reading and writing 
+		
+		//Declare and initialize variables
+		String name = " "; 
+		char mainMenu = ' ', correctAnswerChar = ' ';
+		int accumulator = 0, userHighscore = 0, highscore = 0, counter = 0; 
+		String question = " ", answer1 = " ", answer2 = " ", answer3 = " ", answer4 = " ", answer = " ", correctAnswer = " ", points = " ";    
+		int pointsInt = 0;
+			
+		//Prompt user for name
+		name = JOptionPane.showInputDialog("Enter your name: ");
+				
+		//Display intro
+		JOptionPane.showMessageDialog(null, "Welcome to the Impossible Quiz " + name + "!\n\t\tGood luck!" );
+
+				
+		//Main Loop
+		
+		{
+		do
+		{	
+			
+			mainMenu = displayMainMenu();
+			mainMenu = Character.toUpperCase(mainMenu); 
+			
+			if (mainMenu == 'A')
+			
+				displayRules();
+		
+			else if (mainMenu == 'B')
+			{
+				
+					//read file 
+				//declare a File object
+				File filein = new File("questions.txt"); //attempt to open "names.txt"
+				//Declare a scanner object
+				Scanner fileInput = new Scanner(filein);
+				
+				while(fileInput.hasNext()) //while there is data in the file
+				{
+					
+					//variables to each line
+					question = fileInput.nextLine();
+					answer1 = fileInput.nextLine(); 
+					answer2 = fileInput.nextLine();
+					answer3 = fileInput.nextLine();
+					answer4 = fileInput.nextLine();
+					correctAnswer = fileInput.nextLine();
+					correctAnswerChar = correctAnswer.charAt(0);
+					points = fileInput.nextLine(); 
+					pointsInt = Integer.parseInt(points);
+					
+					//call processQuestion method
+					accumulator += processQuestion(question, answer1, answer2, answer3, answer4, correctAnswerChar, pointsInt);
+							
+				}
+				
+				 JOptionPane.showMessageDialog(null, "Congratulations you have earned: " + accumulator + " points");
+			
+				 userHighscore = accumulator;
+			      
+				 highscore = readInHighScore();
+			
+				 if (userHighscore > highscore)
+					 System.out.println("Congratulations! You have achieved the highest score!");
+				 compareScore(highscore, userHighscore); 	 
+				 
+
+			}	
+				
+				else if (mainMenu == 'C')		
+			    JOptionPane.showMessageDialog(null, "Thanks for playing, Goodbye!");//exit and display farewell message
+					
+				else 
+				{
+					JOptionPane.showMessageDialog(null, "Error: Select from A-C.");
+				}
+		}
+			while (mainMenu != 'C');
+
+	}
+
+}
+	
+	public static char displayMainMenu() throws IOException
+	
+	{
+		String mainMenu = " ";	
+		
+		//Display main menu and prompt user for main menu choice
+		  
+		mainMenu = JOptionPane.showInputDialog("Pick from the following menu:\n" + 
+		"A)\tSee Rules\n" + "B)\tPlay Game\n" + "C)\tExit\n");  //Display main menu catalog in one dialog + input
+
+		char c = mainMenu.charAt(0);
+		return c; 
+	}
+	
+
+	public static void displayRules() 
+	{
+		//display rules
+		JOptionPane.showMessageDialog(null, "You will be asked JAVA related questions to test your knowledge about the language. "
+				+ "You must enter either A, B, C or D to answer the questions and recieve credit."); 
+	}
+	
+	public static int processQuestion(String q1, String ansA, String ansB, String ansC, String ansD, char correctAns, int pointValue)
+	{
+		int counter = 0, accumulator = 0;
+		String answer = " ";
+		char tempAns = ' '; 
+		
+		do
+		{
+		//display questions
+		 answer = JOptionPane.showInputDialog(q1 + "\n" + 
+											ansA + "\n" + 
+											ansB + "\n" + 
+											ansC + "\n" + 
+											ansD + "\n" + 
+											"Score: " + accumulator  + 
+											"\nPlease select the correct answer");
+		
+		tempAns = answer.charAt(0);
+		tempAns = Character.toUpperCase(tempAns); 
+		
+		if (tempAns == correctAns) 
+		{
+			JOptionPane.showMessageDialog(null, "Correct Answer!\nPoints earned: " + pointValue); 
+			accumulator += pointValue; 
+		}
+		
+		else if (answer.equalsIgnoreCase("a") || answer.equalsIgnoreCase("b") || answer.equalsIgnoreCase("c") || answer.equalsIgnoreCase("d"))
+			JOptionPane.showMessageDialog(null, "Wrong Answer\nPoints earned: 0");
+			
+		else
+		{
+			JOptionPane.showMessageDialog(null, "Invalid answer");
+			counter = 1; 
+		}
+		} while (counter == 1); 
+		
+		return accumulator; 
+	}
+	
+	
+	public static int readInHighScore() throws IOException
+
+	{
+		//declare a File object
+			  File filein = new File("highscore.txt"); //attempt to open "highscore.txt"
+
+			  //Declare a scanner object
+			  Scanner fileInput = new Scanner(filein);		
+
+			  //declare variables
+		      int highscoreInt = 0;
+		      String highscore = " ";
+
+		      while(fileInput.hasNext()) //while there is data in the file
+		      {  
+		      //read in a line
+		      highscore = fileInput.next();
+		      highscoreInt = Integer.parseInt(highscore);
+		      }
+		      
+		      //close file
+		      fileInput.close();
+		      
+			return highscoreInt;
+	}
+	
+	
+	public static void compareScore(int highscore, int userHighscore) throws IOException
+
+	{
+		//declare file object
+		PrintWriter outfile = new PrintWriter("highscore.txt"); //if the file already exists, this will overwrite the 
+		//data in the file.  If it does not yet exist, the file will be created.
+
+		
+		
+		
+		//Compare the user's score
+		if (userHighscore > highscore) 
+
+		{
+			//Scanner fileScanner = new Scanner("highscore.txt");
+			//fileScanner.nextLine();
+			
+			//write to file "employees.txt"
+			//outfile.print(); 
+			outfile.println(userHighscore); 
+		}
+		
+		outfile.close(); 
+	}
+	
+}
+
