@@ -47,3 +47,17 @@ C)-2147483648 to 2147483647
 D)None of the above
 A
 35
+This type of method does not return a value.
+A)null
+B)void
+C)empty
+D)anonymous
+B
+35
+This appears at the beginning of a method definition
+A)semicolon
+B)parentheses
+C)body
+D)header
+D
+35
