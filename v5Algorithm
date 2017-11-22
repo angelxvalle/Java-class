@@ -1,0 +1,169 @@
+javaGamev5 Algorithm
+November 22, 2017
+
+
+Declare and initalize variables
+
+String name = " "
+char mainMenu = ' ', correctAnswerChar = ' '
+int accumulator = 0, userHighscore = 0, highscore = 0, counter = 0 
+String question = " ", answer1 = " ", answer2 = " ", answer3 = " ", answer4 = " ", answer = " ", correctAnswer = " ", points = " "
+int pointsInt = 0
+
+Prompt for name
+
+Display intro
+
+Main Loop
+
+do
+{
+
+pull displayMainMenu
+
+pull Character.toUpperCase
+
+if (mainMenu == 'A')
+			
+displayRules();
+		
+else if (mainMenu == 'B')
+
+{
+while(fileInput.hasNext())
+{
+					
+//variables to each line
+question = fileInput.nextLine()
+answer1 = fileInput.nextLine()
+answer2 = fileInput.nextLine()
+answer3 = fileInput.nextLine()
+answer4 = fileInput.nextLine()
+correctAnswer = fileInput.nextLine()
+correctAnswerChar = correctAnswer.charAt(0)
+points = fileInput.nextLine()
+pointsInt = Integer.parseInt(points)
+					
+call processQuestion method
+accumulator += processQuestion(question, answer1, answer2, answer3, answer4, correctAnswerChar, pointsInt)
+							
+}
+				
+Display score
+			
+userHighscore = accumulator
+			      
+highscore = readInHighScore()
+			
+if (userHighscore > highscore)
+display if userHighscore is higher than highscore
+compareScore(highscore, userHighscore) 	 
+				 
+}	
+				
+else if (mainMenu == 'C')		
+display goodbye
+					
+else 
+{
+display error
+}
+}
+while (mainMenu != 'C')
+
+}
+}
+
+
+displayMainMenu()
+{
+String mainMenu = " ";	
+		
+		Display main menu and prompt user for main menu choice
+		
+		char c = mainMenu.charAt(0)
+		return c
+	}
+	
+
+	display displayRules() 
+	{
+		display rules
+		
+	}
+	
+	display processQuestion(String q1, String ansA, String ansB, String ansC, String ansD, char correctAns, int pointValue)
+	{
+		int counter = 0, accumulator = 0
+		String answer = " "
+		char tempAns = ' '
+		
+		do
+		{
+		display questions
+		
+		tempAns = answer.charAt(0)
+		tempAns = Character.toUpperCase(tempAns)
+		
+		if (tempAns == correctAns) 
+		{
+			display correct answer
+			accumulator += pointValue
+		}
+		
+		else if (answer.equalsIgnoreCase("a") || answer.equalsIgnoreCase("b") || answer.equalsIgnoreCase("c") || answer.equalsIgnoreCase("d"))
+			display wrong answer show 0 points earned
+			
+		else
+		{
+			display invalid answer
+			counter = 1
+		}
+		} while (counter == 1)
+		
+		return accumulator
+	}
+	
+	
+	display readInHighScore()
+
+	{
+		
+		      declare variables
+		      int highscoreInt = 0
+		      String highscore = " "
+
+		      while(fileInput.hasNext()) //while there is data in the file
+		      { 
+		      read in a line
+		      highscore = fileInput.next()
+		      highscoreInt = Integer.parseInt(highscore)
+		      }
+		      
+		      close file
+		      fileInput.close()
+		      
+			return highscoreInt
+	}
+	
+	
+	display compareScore(int highscore, int userHighscore) 
+
+	{
+		Compare the user's score
+		if (userHighscore > highscore) 
+
+		}
+			Scanner fileScanner = new Scanner("highscore.txt")
+			fileScanner.nextLine()
+			
+			write to file "employees.txt"
+			outfile.print()
+			outfile.println(userHighscore) 
+		}
+		
+		outfile.close()
+	}
+	
+}
+
